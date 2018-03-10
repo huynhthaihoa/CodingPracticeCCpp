@@ -297,3 +297,17 @@ bool isUniqueValue(int a[], int n)
 	return true;
 }
 
+bool isUniqueChars(char *str)
+{
+	int checker = 0;
+	size_t len = strlen(str);
+	int val = -1;
+	for(size_t i = 0; i < len; ++i)
+	{
+		val = str[i] - 'a';
+		if ((checker & (1 << val)) > 0) 
+			return false;
+		checker |= (1 << val);
+	}
+	return true;
+}
