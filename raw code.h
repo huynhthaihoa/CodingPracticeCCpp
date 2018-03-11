@@ -311,3 +311,36 @@ bool isUniqueChars(char *str)
 	}
 	return true;
 }
+
+int commonCharacterCount(std::string s1, std::string s2)
+{
+	std::map<char, int[2]> charactermaps;
+	int count = 0;
+	for(char& c : s1) 
+	{
+		try
+		{
+			++charactermaps.at(c)[0];
+		}
+		catch(out_of_range &e)
+		{
+			charactermaps[c] = {0, 0};
+		}
+	}
+	for(char& c : s2) 
+	{
+		try
+		{
+			++charactermaps.at(c)[1];
+		}
+		catch(out_of_range &e)
+		{
+			charactermaps[c] = {0, 0};
+		}
+	}
+	for(const auto &pair: charactermaps)
+	{
+		count += (pair.second[0] < pair.second[1]) ? pair.second[0] : pair.second[1];
+	}
+	return count;
+}
