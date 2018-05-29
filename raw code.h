@@ -344,3 +344,148 @@ int commonCharacterCount(std::string s1, std::string s2)
 	}
 	return count;
 }
+
+bool isAlmostIncreasing(vector<int> v)
+{
+	bool hasRemovableEle = false;
+    int size = v.size();
+    for(int i = 0; i < size - 1; ++i)
+    {
+    	if(a[i + 1] <= a[i])
+    	{
+    		if(hasRemovable || (i < size - 2 && a[i + 2] <= a[i]))
+    			return false;
+    		hasRemovable = true;
+    	}
+    }
+    return true;
+}
+// Input : str = "geeekk"
+// Output : e
+
+// Input : str = "aaaabbcbbb"
+// Output : a
+
+char getMaxConceChar(std::string a)
+{
+	int pivot;
+	int count;
+	int max_pivot;		
+	int max_count = 0; 
+	int size = a.length();
+	for(int i = 0; i < size; ++i)
+	{
+		if(i == 0 || a[i] != a[pivot])
+		{
+			if(count > max_count)
+			{
+				max_count = count;
+				max_pivot = pivot;
+			}
+			pivot = i;
+			count = 1;
+		}
+		else if(a[i] == a[pivot])
+			++count;
+	}
+	return a[max_pivot];
+}
+int Bit1Count(int number)
+{
+	int count = 0;
+	while(number != 0) //number ^ 0 //number | 0
+	{
+		count += number & 1;
+		number >>= 1;
+	}
+	return count;
+}
+bool isPalindrome(std::string str)
+{
+	size_t len = str.size();
+	size_t half_of_len = len >> 1;
+	--len;
+	for(int i = 0; i < half_of_len; ++i)
+	{
+		if(str[i] != str[len - i])
+			return false;
+	}
+	return true;
+}
+std::string LongestCommonPalindrome(std::string a, std::string b)
+{
+	size_t len = 2;
+	size_t len_a = a.size();
+	size_t len_b = b.size();
+	size_t j;
+	std::string test_str;
+	std::string res_str = "";
+	for(size_t i = 0; i + len < len_a + 1 && len <= len_b; ++i)
+	{
+		j = len;
+		while(j <= len_a - i && j <= len_b)
+		{
+			test_str = a.substr(i, j);
+			if(isPalindrome(test_str) && b.find(test_str)!= string::npos)
+			{
+				len = j;
+				res_str = test_str;
+			}
+			j++;
+		}
+	}
+	return res_str;
+}
+typedef struct Node
+{
+	Node* Next;
+	Node* Prev;
+	int info;
+};
+typedef Node* pNode
+typedef struct List
+{
+	pNode Head;
+	pNode Tail;
+};
+void subTranverse(List &l, int src, int des)
+{
+	pNode preSrcNode = nullptr;
+	pNode srcNode = nullptr;
+	pNode postDesNode = nullptr;
+	pNode desNode = nullptr;
+	pNode pTmp = nullptr;
+	pNode pIter = l.head;
+	int itr = 0;
+	while(pIter != nullptr)
+	{
+		if(itr == src - 1)
+		{
+			preSrcNode = pIter;
+			srcNode = pIter->Next;
+		}
+		else if(iter > src && iter < des)
+		{
+			pTmp = pIter->next;
+			pIter->next = pIter->prev;
+			pIter->prev = pTmp;
+		}
+		else if(iter == des)
+		{
+			desNode = pIter;
+			postDesNode = desNode->Next;
+			desNode->Next = desNode->Prev;//
+			preSrcNode->Next = desNode;//
+			desNode->Prev = preSrcNode;//
+			srcNode->Next = postDesNode;//
+			postDesNode->Prev = srcNode;//
+		}
+		else if(iter > des)
+			break;
+		itr++;
+		if(iter > src && iter < des)
+			pIter = pIter->Prev;
+		else
+			pIter = pIter->Next;
+	}
+}
