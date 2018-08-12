@@ -489,3 +489,87 @@ void subTranverse(List &l, int src, int des)
 			pIter = pIter->Next;
 	}
 }
+
+//solution1
+size_t countSimilarCharacter(std::string s1, std::string s2)
+{
+	std::map<char, int> map1;
+	size_t len1 = s1.size();
+	size_t len2 = s2.size();
+	size_t count = 0;
+	for(size_t i = 0; i < len1; ++i)
+	{
+		try
+		{
+			map1.at(s1[i])++;
+		}
+		catch(out_of_range &e)
+		{
+			map1[s1[i]] = 1;
+		}
+	}
+	for(size_t i = 0; i < len2; ++i)
+	{
+		try
+		{
+			if(map1.at(s2[i]) > 0)
+			{
+				map1.at(s2[i])--;
+			    count++;
+			}
+		}
+		catch(out_of_range &e)
+		{
+			continue;
+		}
+	}
+	return count;
+}
+
+//solution 2
+size_t countSimilarCharacter(std::string s1, std::string s2)
+{
+	size_t len1 = s1.size();
+	size_t count = 0;
+	size_t pivot;
+	for(int i = 0; i < len1; ++i)
+	{
+		pivot = s2.find_first_of(s1[i]);
+		if(pivot != string::npos)
+		{
+			s2[pivot] = -1;
+			count++;
+		}
+	}
+	return count;
+}
+
+int minimalLength(std::vector<int> inputArr)
+{
+	int max = inputArr[0];
+	size_t len = inputArr.size();
+	for(int i = 1; i < len; ++i)
+	{
+		if(max < inputArr[i])
+			max = inputArr[i];
+	}
+	int checkArr[max + 2];
+	for(int i = 0; i < max + 2; ++i)
+		checkArr[i] = 0;
+	for(int i = 0; i < len; ++i)
+		checkArr[inputArr[i]] = 1;
+	int k;
+	for(int i = 0; i < max + 2; ++i)
+	{
+		if(checkArr[i] == 0)
+		{
+			for(k = 2; i * k < max; ++k)
+			{
+				if(checkArr[i * k] == 1)
+					break;
+			}
+			return i;
+		}
+	}
+	return 0;
+}
