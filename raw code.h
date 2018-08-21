@@ -573,3 +573,39 @@ int minimalLength(std::vector<int> inputArr)
 	}
 	return 0;
 }
+//way 1
+//Case 1:
+// [1 2 3 9] sum = 8: False
+// [1 2 4 4] sum = 8: True
+bool checkPair(int a[], int n, int sum)
+{
+	int checkArr[sum + 1];
+	for(int i = 0; i < sum + 1; ++i)
+		checkArr[i] = 0;
+	for(int i = 0; i < n; ++i)
+	{
+		if(checkArr[sum - a[i]] == 1)
+			return true;
+		checkArr[a[i]] = 1;
+	}
+	return false;
+}
+//way 2 (used for sorted array)
+//Case 1:
+// [1 2 3 9] sum = 8: False
+// [1 2 4 4] sum = 8: True
+bool checkPair(int a[], int n, int sum)
+{
+	int l = 0;
+	int r = n - 1;
+	while(l <= r)
+	{
+		if(a[l] + a[r] == sum)
+			return true;
+		else if(a[l] + a[r] < sum)
+			l++;
+		else
+			r--;
+	}
+	return false;
+}
