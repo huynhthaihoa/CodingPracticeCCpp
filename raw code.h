@@ -609,3 +609,10 @@ bool checkPair(int a[], int n, int sum)
 	}
 	return false;
 }
+//get the last digit (from left to right) of N!
+int LastDigitOfFactorial(int N)
+{
+	if(N == 0)
+		return 1;
+	return (LastDigitOfFactorial(N - 1) * (N % 10)) % 10;
+}
