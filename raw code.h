@@ -616,3 +616,69 @@ int LastDigitOfFactorial(int N)
 		return 1;
 	return (LastDigitOfFactorial(N - 1) * (N % 10)) % 10;
 }
+//above problem - dynamic programming
+int LastDigitOFactorial(int N)
+{
+	int curr = 1;
+	int prev = 1;
+	for(int i = 1; i < N; ++i)
+	{
+		curr = ((i % 10) * prev) % 10;
+		prev = curr;
+	}
+	return curr;
+}
+//reverse linked list
+typedef struct Node
+{
+	Node* Next;
+	Node* Prev;
+	int info;
+};
+typedef Node* pNode
+typedef struct List
+{
+	pNode Head;
+	pNode Tail;
+};
+void subTranverse(List &l, int src, int des)
+{
+	pNode preSrcNode = nullptr;
+	pNode srcNode = nullptr;
+	pNode postDesNode = nullptr;
+	pNode desNode = nullptr;
+	pNode pTmp = nullptr;
+	pNode pIter = l.head;
+	int itr = 0;
+	while(pIter != nullptr)
+	{
+		if(itr == src - 1)
+		{
+			preSrcNode = pIter;
+			srcNode = pIter->Next;
+		}
+		else if(iter > src && iter < des)
+		{
+			pTmp = pIter->next;
+			pIter->next = pIter->prev;
+			pIter->prev = pTmp;
+		}
+		else if(iter == des)
+		{
+			desNode = pIter;
+			postDesNode = desNode->Next;
+			desNode->Next = desNode->Prev;//
+			preSrcNode->Next = desNode;//
+			desNode->Prev = preSrcNode;//
+			srcNode->Next = postDesNode;//
+			postDesNode->Prev = srcNode;//
+		}
+		else if(iter > des)
+			break;
+		itr++;
+		if(iter > src && iter < des)
+			pIter = pIter->Prev;
+		else
+			pIter = pIter->Next;
+	}
+}
