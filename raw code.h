@@ -682,3 +682,20 @@ void subTranverse(List &l, int src, int des)
 			pIter = pIter->Next;
 	}
 }
+//Sol: 16062019 (need more test cases)
+int Count(int N, int M, int start)
+{
+	if(M + 1 == N)
+		return X[M];
+	if(M + 1 > N)
+		return 0;
+	int max = 0;
+	int count;
+	for(int i = start + M; (i < N) && (i < start + 2 * M); ++i)
+	{
+		count = X[i] + Count(N, M, i);
+		if(max < count)
+			max = count;
+	}
+	return max;
+}
