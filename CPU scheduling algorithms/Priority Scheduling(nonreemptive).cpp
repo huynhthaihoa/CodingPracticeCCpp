@@ -4,10 +4,10 @@ void swap(int* a, int* b)
 {
 	int temp;
 	temp = *a;
-	*a=*b;
-	*b=temp;
+	*a = *b;
+	*b = temp;
 }
-void main()
+int main()
 {
 	int *pn, *arrt, *burt, *prior, *stat, *fint, *tat, *wt;
 	int n;
@@ -25,21 +25,19 @@ void main()
 	fint = new int[n];
 	tat = new int[n];
 	wt = new int[n];
-	for(i = 0;i < n;i++) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("Enter the Process Name, Arrival Time,Burst Time and Priority:"); 
 		scanf("%d%d%d", &pn[i], &arrt[i], &burt[i], &prior[i]); 
 	} 
-	for(i = 0;i < n;i++)
+	for(i = 0; i < n; ++i)
 	{
 		timelength = (i > 0) ? fint[i - 1]: arrt[i];
 		pivot = i;
-		for(int j = i + 1; j < n; j++)
+		for(int j = i + 1; j < n; ++j)
 		{
 			if(arrt[j] <= timelength && prior[j] > prior[i])
-			{
 				pivot = j;
-			}
 		}
 		swap(&pn[i], &pn[pivot]);
 		swap(&arrt[i], &arrt[pivot]);	
@@ -76,4 +74,5 @@ void main()
 	delete fint;
 	delete tat;
 	delete wt;
+	return 0;
 }

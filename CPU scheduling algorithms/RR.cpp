@@ -4,17 +4,17 @@ void swap(int* a, int* b)
 {
 	int temp;
 	temp = *a;
-	*a=*b;
-	*b=temp;
+	*a = *b;
+	*b = temp;
 }
-void main()
+int main()
 {
 	int *pn; 
 	int *bur, *rmt, *finish, *stat, *tat, *wt;
 	int i, n;
 	int tquantum = 0;
-	int totwt = 0,tottat = 0; 
-	int j = 0,sum = 0;
+	int totwt = 0, tottat = 0; 
+	int j = 0, sum = 0;
 	printf("Enter the number of processes:"); 
 	scanf("%d", &n); 
 	pn = new int[n];
@@ -32,28 +32,28 @@ void main()
 	printf("Enter the time quantum:");
 	scanf("%d", &tquantum);
 	for(int i = 0; i < n; ++i)
-	{
 		rmt[i] = bur[i];
-	}
 	printf("Proc  Start  Stop\n");
 	int test = 0;
+	int idx;
 	while(test < n)
 	{
-		if(rmt[j % n] > 0)
+		idx = j % n;
+		if(rmt[idx] > 0)
 		{
-			printf("%d\t%d\t", pn[j % n], sum);
+			printf("%d\t%d\t", pn[idx], sum);
 			test = 0;
-			if(rmt[j % n] == bur[j % n])
+			if(rmt[idx] == bur[idx])
 				stat[j % n] = sum;
-			sum += (rmt[j % n] > tquantum) ? tquantum : rmt[j % n];
+			sum += (rmt[idx] > tquantum) ? tquantum : rmt[idx];
 			printf("%d\n", sum);
-		    rmt[j % n] -= (rmt[j % n] > tquantum) ? tquantum : rmt[j % n];
-		    if(rmt[j % n] == 0)
-				finish[j % n] = sum;
+		    rmt[j % n] -= (rmt[idx] > tquantum) ? tquantum : rmt[idx];
+		    if(rmt[idx] == 0)
+				finish[idx] = sum;
 		}
 		else
-			test++;
-		j++;
+			++test;
+		++j;
 	}
 	for(i = 0; i < n; ++i)  
 	{ 
@@ -61,7 +61,7 @@ void main()
 		wt[i] = tat[i] - bur[i];
 	}
 	printf("\nPName         Exectime    Waittime     TAT   Finish");
-	for(int i = 0; i < n; ++i) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d%s", pn[i], bur[i], wt[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
 	    totwt += wt[i]; 
@@ -76,4 +76,5 @@ void main()
 	delete stat;
 	delete tat;
 	delete wt;
+	return 0;
 }

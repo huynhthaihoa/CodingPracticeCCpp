@@ -21,8 +21,9 @@ void swap(int* a, int* b)
 }
 void InterchangeSort(int pn[], int arr[], int bur[], int n)
 {
-	int i,j;
+	int i, j;
 	for(i = 0; i < n; ++i)
+	{
 		for(j = i + 1; j < n; ++j)
 		{
 			if(arr[i] > arr[j])
@@ -31,7 +32,9 @@ void InterchangeSort(int pn[], int arr[], int bur[], int n)
 			    swap(&arr[i], &arr[j]);	
 			    swap(&bur[i], &bur[j]);
 			}	
-		}
+		}		
+	}
+
 }
 void Init(QUEUE &q)
 {
@@ -50,21 +53,16 @@ TNODE GetNode(int rmt, int pos)
 void Insert(QUEUE &q, TNODE t)
 {
 	if(q.THead == NULL)
-	{
 		q.THead = q.TTail = t;
-		return;
-	}
 	else if(t->rmt <= q.THead->rmt)
 	{
 		t->tNext = q.THead;
 		q.THead = t;
-		return;
 	}
 	else if(t->rmt > q.TTail->rmt)
 	{
 		q.TTail->tNext = t;
 		q.TTail = t;
-		return;
 	}
 	else
 	{
@@ -86,9 +84,7 @@ TNODE DeQueue(QUEUE &q)
 	TNODE p = q.THead;
 	q.THead = q.THead->tNext;
 	if(q.THead == NULL)
-	{
 		q.TTail = NULL;
-	}
 	return p;
 }
 void DecreaseHead(QUEUE &q)
@@ -97,7 +93,7 @@ void DecreaseHead(QUEUE &q)
 	if(p != NULL)
 		Insert(q, GetNode(p->rmt - 1, p->pos));
 }
-void main()
+int main()
 {
 	int *pn; 
 	int *arr, *bur, *finish, *stat, *tat, *wt, i, n;
@@ -144,7 +140,7 @@ void main()
 	printf("\nPName     Arrtime     Exectime    Waittime     TAT   Finish");
 	for(int i = 0; i < n; ++i) 
 	{ 
-		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], wt[i], tat[i], finish[i], i == n-1 ? "\n" : ""); 
+		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], wt[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
 	    totwt += wt[i]; 
 		tottat += tat[i]; 
 	}
@@ -156,4 +152,5 @@ void main()
 	delete finish;
 	delete tat;
 	delete wt;
+	return 0;
 }

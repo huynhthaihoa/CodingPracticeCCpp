@@ -57,21 +57,16 @@ TNODE GetNode(int rmt,int pos,int prior)
 void Insert(QUEUE &q,TNODE t)
 {
 	if(q.THead == NULL)
-	{
 		q.THead = q.TTail = t;
-		return;
-	}
 	else if(t->prior > q.THead->prior)
 	{
 		t->tNext = q.THead;
 		q.THead = t;
-		return;
 	}
 	else if(t->prior < q.TTail->prior)
 	{
 		q.TTail->tNext = t;
 		q.TTail = t;
-		return;
 	}
 	else
 	{
@@ -93,9 +88,7 @@ TNODE DeQueue(QUEUE &q)
 	TNODE p = q.THead;
 	q.THead = q.THead->tNext;
 	if(q.THead == NULL)
-	{
 		q.TTail = NULL;
-	}
 	return p;
 }
 void DecreaseHead(QUEUE &q)
@@ -104,15 +97,15 @@ void DecreaseHead(QUEUE &q)
 	if(p != NULL)
 		Insert(q, GetNode((p->rmt - 1), p->pos, p->prior));
 }
-void main()
+int main()
 {
 	QUEUE q;
 	int *pn; 
 	int *arr, *bur, *prior, *finish, *tat, *wt, i, n;
-	int totwt = 0,tottat = 0; 
+	int totwt = 0, tottat = 0; 
 	int j = 0;
 	printf("Enter the number of processes:"); 
-	scanf("%d",&n); 
+	scanf("%d", &n); 
 	pn = new int[n];
 	arr = new int[n];
 	bur = new int[n];
@@ -120,7 +113,7 @@ void main()
 	finish = new int[n];
 	tat = new int[n];
 	wt = new int[n];
-	for(i = 0;i < n;i++) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("Enter the Process Name, Arrival Time, Burst Time and Priority:"); 
 		scanf("%d%d%d%d", &pn[i], &arr[i], &bur[i], &prior[i]); 
@@ -136,15 +129,11 @@ void main()
 			finish[q.THead->pos] = l;
 	        DeQueue(q);
 			if(q.THead == NULL && l <= arr[j])
-		    {
 				l = arr[j];
-		    }
 	    }
-		for( ; l == arr[j]; ++j)
-		{
+		for(; l == arr[j]; ++j)
 			Insert(q, GetNode( bur[j], j, prior[j]));
-		}
-		l++;
+		++l;
     }
 	while(q.THead != NULL);
 	for(i = 0; i < n; ++i) 
@@ -153,7 +142,7 @@ void main()
 		wt[i] = tat[i] - bur[i];
 	} 
 	printf("\nPName     Arrtime     Exectime    Waittime     TAT   Finish");
-	for(int i = 0; i < n; ++i) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], wt[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
 	    totwt += wt[i]; 
@@ -168,4 +157,5 @@ void main()
 	delete finish;
 	delete tat;
 	delete wt;
+	return 0;
 }

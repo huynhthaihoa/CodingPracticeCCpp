@@ -8,7 +8,7 @@ typedef struct TNODE
 
 typedef struct QUEUE
 {
-	TNODE a[10];
+	TNODE a[100];
 	int n;
 };
 void swap(int &a, int &b)
@@ -21,7 +21,7 @@ void swap(int &a, int &b)
 void InterchangeSort(int pn[], int arr[], int bur[], int n)
 {
 	int i, j;
-	for(i = 0; i < n; ++i)
+	for(i = 0; i < n - 1; ++i)
 	{
 		for(j = i + 1; j < n; ++j)
 		{
@@ -56,30 +56,29 @@ void Insert(QUEUE &q, TNODE t)
 	else		
 	{
 		int k = 0;
-		while((t.rmt > q.a[k].rmt) && k < q.n)
-			k++;
+		for(; k < q.n && (t.rmt > q.a[k].rmt); ++k);
 		for(int i = q.n; i > k; --i)
 			q.a[i] = q.a[i - 1];
 		q.a[k] = t;
-		q.n++;
+		++q.n;
 	}
 }
 void DeQueue(QUEUE &q)
 {
 	for(int i = 0; i < q.n - 1; ++i)
 		q.a[i] = q.a[i + 1];
-	q.n--;
+	--q.n;
 }
 void DecreaseHead(QUEUE &q)
 {
 	if(q.n > 0)
-		q.a[0].rmt--;
+		--q.a[0].rmt;
 }
-void main()
+int main()
 {
 	int pn[10]; 
 	int arr[10], bur[10], finish[10], stat[10], tat[10], wt[10], i, n;
-	int totwt = 0,tottat = 0; 
+	int totwt = 0, tottat = 0; 
 	int j = 0;
 	QUEUE q;
 	printf("Enter the number of processes:"); 
@@ -113,7 +112,7 @@ void main()
 		wt[i] = tat[i] - bur[i];
 	} 
 	printf("\nPName     Arrtime     Exectime    Waittime     TAT   Finish");
-	for(int i = 0; i < n; ++i) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], wt[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
 	    totwt += wt[i]; 
@@ -121,4 +120,5 @@ void main()
 	}
 	printf("\nAverage waiting time    Average turnaround time");
 	printf("\n%6.2f\t%6.2f", (float)totwt / n, (float)tottat / n);
+	return 0;
 }

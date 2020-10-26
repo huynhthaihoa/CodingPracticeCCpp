@@ -4,13 +4,14 @@ void swap(int* a, int* b)
 {
 	int temp;
 	temp = *a;
-	*a=*b;
-	*b=temp;
+	*a = *b;
+	*b = temp;
 }
 void InterchangeSort(int pn[], int arr[], int bur[], int n)
 {
 	int i, j;
-	for(i = 0; i < n; ++i)
+	for(i = 0; i < n - 1; ++i)
+	{
 		for(j = i + 1; j < n; ++j)
 		{
 			if(arr[i] > arr[j])
@@ -20,20 +21,21 @@ void InterchangeSort(int pn[], int arr[], int bur[], int n)
 			    swap(&bur[i], &bur[j]);
 			}	
 		}
+	}
 } 
-void main() 
+int main() 
 { 
 	int *pn; 
 	int *arr, *bur, *finish, *star, *tat, *wt;
 	int i, n;
-	int totwt=0, tottat=0; 
+	int totwt = 0, tottat = 0; 
 	printf("Enter the number of processes:"); 
-	scanf("%d",&n);
+	scanf("%d", &n);
 	pn = new int[n];
 	arr = new int[n];
 	bur = new int[n];
 	finish = new int[n];
-	star = new int[n];
+	start = new int[n];
 	tat = new int[n];
 	wt = new int[n];
 	for(i = 0; i < n; ++i) 
@@ -42,24 +44,20 @@ void main()
 		scanf("%d%d%d", &pn[i], &arr[i], &bur[i]); 
 	} 
 	InterchangeSort(pn, arr, bur, n);
-	for(i=0;i<n;i++) 
+	for(i = 0; i < n; ++i) 
 	{ 
-		if(i==0) 
-		{ 
-			star[i] = arr[i];  
-		} 
+		if(i == 0) 
+			start[i] = arr[i];  
 		else 
-		{ 
-			star[i] = (finish[i - 1] >= arr[i])? finish[i - 1]:arr[i];
-		} 
-		wt[i] = star[i] - arr[i]; 
-		finish[i] = star[i] + bur[i]; 
+			start[i] = (finish[i - 1] >= arr[i])? finish[i - 1] : arr[i];
+		wt[i] = start[i] - arr[i]; 
+		finish[i] = start[i] + bur[i]; 
 		tat[i] = finish[i] - arr[i];
 	} 
 	printf("\nPName     Arrtime     Burtime    Start     TAT   Finish");
 	for(i = 0; i < n; ++i) 
 	{ 
-		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], star[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
+		printf("\n%d\t%6d\t\t%6d\t%6d\t%6d\t%6d%s", pn[i], arr[i], bur[i], start[i], tat[i], finish[i], i == n - 1 ? "\n" : ""); 
 	    totwt += wt[i]; 
         tottat += tat[i];
 	} 
@@ -69,7 +67,8 @@ void main()
 	delete arr;
 	delete bur;
 	delete finish;
-	delete star;
+	delete start;
 	delete tat;
 	delete wt;
+	return 0;
 }

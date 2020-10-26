@@ -23,7 +23,7 @@ void swap(int* a, int* b)
 void InterchangeSort(int pn[], int arr[], int bur[], int n)
 {
 	int i, j;
-	for(i = 0; i < n; ++i)
+	for(i = 0; i < n - 1; ++i)
 	{
 		for(j = i + 1; j < n; ++j)
 		{
@@ -54,10 +54,7 @@ void Init(Queue &q)
 void InsertTail(Queue &q,P np)
 {
 	if(q.pHead == NULL)
-	{
 		q.pHead = q.pTail = np;
-		return;
-	}
 	else
 	{
 		q.pTail->pNext = np;
@@ -73,11 +70,11 @@ P DeQueue(Queue &q)
 	p->pNext = NULL;
 	return p;
 }
-void main()
+int main()
 {
 	int *pn, n;
 	int *arr, *rmt, *bur, *fint, *tat, *wt;
-	int tquantum = 0, i, sum = 0,j = 0;
+	int tquantum = 0, i, sum = 0, j = 0;
 	int totwt = 0, tottat = 0;
 	Queue q;
 	P tmp;
@@ -90,7 +87,7 @@ void main()
 	fint = new int[n];
 	tat = new int[n];
 	wt = new int[n];
-	for(i = 0;i < n;i++) 
+	for(i = 0; i < n; ++i) 
 	{ 
 		printf("Enter the Process Name,Arrival Time and Burst Time:"); 
 		scanf("%d%d%d", &pn[i], &arr[i], &bur[i]); 
@@ -105,15 +102,12 @@ void main()
 	//}
 	do
 	{
-		if((q.pHead == NULL || q.pHead->rmt == 0 && q.pHead->pNext == NULL ) && sum < arr[j])
+		if(sum < arr[j] && (q.pHead == NULL || q.pHead->rmt == 0 && q.pHead->pNext == NULL ))
 			sum = arr[j];
 		if(sum >= arr[j])
 		{
-			while(sum >= arr[j] && j < n)
-			{
+			for(j < n && sum >= arr[j]; ++j)
 				InsertTail(q, GetProcess(bur[j], j));
-				j++;
-			}
 		}
 		tmp = DeQueue(q);
 		if(tmp->rmt > 0)
@@ -127,7 +121,7 @@ void main()
 		}
 	}
 	while(j < n);
-	for(i = 0;i < n;i++)  
+	for(i = 0; i < n; ++i)  
 	{ 
 		tat[i] = fint[i] - arr[i];
 		wt[i] = tat[i] - bur[i];
@@ -140,7 +134,7 @@ void main()
 		tottat += tat[i]; 
 	}
 	printf("\nAvg waittime    Avg turnaroundtime");
-	printf("\n%6.2f\t\t%6.2f",(float)totwt / n, (float)tottat / n);
+	printf("\n%6.2f\t\t%6.2f", (float)totwt / n, (float)tottat / n);
 	delete pn;
 	delete bur;
 	delete rmt;
@@ -148,4 +142,5 @@ void main()
 	delete arr;
 	delete tat;
 	delete wt;
+	return 0;
 }

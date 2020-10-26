@@ -4,16 +4,16 @@ void swap(int* a, int* b)
 {
 	int temp;
 	temp = *a;
-	*a=*b;
-	*b=temp;
+	*a = *b;
+	*b = temp;
 }
-void main()
+int main()
 {
 	int *pn, *arrt, *burt, *stat, *fint, *tat, *wt;
 	int n;
-	int i;
+	int i, j;
 	int pivot;
-	int totwt = 0,tottat = 0; 
+	int totwt = 0, tottat = 0; 
 	int timelength;
 	printf("Enter the number of processes:");
 	scanf("%d", &n);
@@ -31,9 +31,9 @@ void main()
 	} 
 	for(i = 0; i < n; ++i)
 	{
-		timelength = (i > 0)? fint[i - 1]: arrt[i];
+		timelength = (i > 0)? fint[i - 1] : arrt[i];
 		pivot = i;
-		for(int j = i + 1; j < n; ++j)
+		for(j = i + 1; j < n; ++j)
 		{
 			if(arrt[j] <= timelength && burt[j] < burt[i])
 				pivot = j;
@@ -44,7 +44,7 @@ void main()
 		if(i  ==  0) 
 			stat[i] = arrt[i]; 
 		else
-			stat[i] = (fint[i - 1] >= arrt[i])? fint[i - 1]:arrt[i]; 
+			stat[i] = (fint[i - 1] >= arrt[i])? fint[i - 1] : arrt[i]; 
 		wt[i] = stat[i] - arrt[i]; 
 		fint[i] = stat[i] + burt[i]; 
 		tat[i] = fint[i] - arrt[i]; 
@@ -65,4 +65,5 @@ void main()
 	delete fint;
 	delete tat;
 	delete wt;
+	return 0;
 }
